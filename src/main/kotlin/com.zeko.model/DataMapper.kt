@@ -311,7 +311,11 @@ open class DataMapper {
         return toAdd2
     }
 
-    open fun map(allTableInfo: LinkedHashMap<String, TableInfo>, arr: List<Any>, delimiter: String = "-"): ArrayList<LinkedHashMap<String, Any>> { //ArrayList<LinkedHashMap<String, Any>>? {
+    open fun map(mapConf: MapperConfig, arr: List<Any>, delimiter: String = "-"): ArrayList<LinkedHashMap<String, Any>> {
+        return map(mapConf.toTableInfo(), arr)
+    }
+
+    open fun map(allTableInfo: LinkedHashMap<String, TableInfo>, arr: List<Any>, delimiter: String = "-"): ArrayList<LinkedHashMap<String, Any>> {
         if (arr.size == 0) {
             return arrayListOf()
         }
