@@ -21,6 +21,7 @@
 package com.zeko.model
 
 import com.github.jasync.sql.db.ResultSet
+import io.vertx.core.json.JsonArray
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDateTime
 import org.joda.time.LocalDate
@@ -30,35 +31,45 @@ import java.util.LinkedHashMap
 
 class ResultSetHelper {
     companion object {
-        fun toMaps(rows: ResultSet, columns: List<String>, timeProcessor: ((BaseLocal, DateTimeZone?, DateTimeZone?) -> Any)? = null, tzFrom: DateTimeZone?, tzTo: DateTimeZone?): List<LinkedHashMap<String, Any?>> {
+
+        fun toMaps(rows: List<JsonArray>, columns: List<String>, timeProcessor: ((BaseLocal, DateTimeZone?, DateTimeZone?) -> Any)? = null, tzFrom: DateTimeZone?, tzTo: DateTimeZone?): List<LinkedHashMap<String, Any?>> {
             val results = ArrayList<LinkedHashMap<String, Any?>>(rows.size)
-
             for (row in rows) {
-                var i = 0
-                val obj = java.util.LinkedHashMap<String, Any?>()
-
-                for (value in row) {
-                    val colName = columns[i]
-                    if (timeProcessor != null) {
-                        obj[colName] = when (value) {
-                            is LocalDateTime -> timeProcessor(value, tzFrom, tzTo)
-                            is LocalDate -> timeProcessor(value, tzFrom, tzTo)
-                            is LocalTime -> timeProcessor(value, tzFrom, tzTo)
-                            else -> value
-                        }
-                    } else {
-                        obj[colName] = when (value) {
-                            is LocalDateTime -> DateTimeHelper.toDateTimeStrUTC(value)
-                            is LocalDate -> DateTimeHelper.toDateTimeStrUTC(value)
-                            is LocalTime -> DateTimeHelper.toDateTimeStrUTC(value)
-                            else -> value
-                        }
-                    }
-                    i++
-                }
-                results.add(obj)
+                results.add(convertRowToMap(row.toList(), columns, timeProcessor, tzFrom, tzTo))
             }
             return results
+        }
+
+        fun toMaps(rows: ResultSet, columns: List<String>, timeProcessor: ((BaseLocal, DateTimeZone?, DateTimeZone?) -> Any)? = null, tzFrom: DateTimeZone?, tzTo: DateTimeZone?): List<LinkedHashMap<String, Any?>> {
+            val results = ArrayList<LinkedHashMap<String, Any?>>(rows.size)
+            for (row in rows) {
+                results.add(convertRowToMap(row.toList(), columns, timeProcessor, tzFrom, tzTo))
+            }
+            return results
+        }
+
+        fun convertRowToMap(row: List<Any?>, columns: List<String>, timeProcessor: ((BaseLocal, DateTimeZone?, DateTimeZone?) -> Any)? = null, tzFrom: DateTimeZone?, tzTo: DateTimeZone?): LinkedHashMap<String, Any?> {
+            val obj = java.util.LinkedHashMap<String, Any?>()
+
+            for ((i, value) in row.withIndex()) {
+                val colName = columns[i]
+                if (timeProcessor != null) {
+                    obj[colName] = when (value) {
+                        is LocalDateTime -> timeProcessor(value, tzFrom, tzTo)
+                        is LocalDate -> timeProcessor(value, tzFrom, tzTo)
+                        is LocalTime -> timeProcessor(value, tzFrom, tzTo)
+                        else -> value
+                    }
+                } else {
+                    obj[colName] = when (value) {
+                        is LocalDateTime -> DateTimeHelper.toDateTimeStrUTC(value)
+                        is LocalDate -> DateTimeHelper.toDateTimeStrUTC(value)
+                        is LocalTime -> DateTimeHelper.toDateTimeStrUTC(value)
+                        else -> value
+                    }
+                }
+            }
+            return obj
         }
     }
 }

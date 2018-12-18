@@ -200,7 +200,9 @@ open class DataMapper {
                                         }
                                     }
 
-                                    manyResults.put(linkRowPrimeKey!!, linkRow)
+                                    if (linkRowPrimeKey != null) {
+                                        manyResults.put(linkRowPrimeKey, linkRow)
+                                    }
                                 }
                                 rows.put(tbl, manyResults)
                             }
