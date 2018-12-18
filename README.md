@@ -5,6 +5,7 @@
 A lightweight, fast and simple data mapper library in Kotlin that helps to map the result of queries from your normalized dataset(from RDBMS, SQLite, CSV or any source) back into relational mapped Hash maps
 
 ps: Zeko turns out to be rabbit in Croatian, thus the logo :D
+[Show your ❤ with a ★](https://github.com/jasync-sql/jasync-sql/stargazers)
 
 To use, add these to your maven pom.xml
 
@@ -23,7 +24,7 @@ To use, add these to your maven pom.xml
     <dependency>
       <groupId>com.zeko.model</groupId>
       <artifactId>data-mapper</artifactId>
-      <version>1.0</version>
+      <version>1.3</version>
     </dependency>
     
     
