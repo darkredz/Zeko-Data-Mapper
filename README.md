@@ -141,5 +141,14 @@ val tables = MapperConfig("id", true)
     .table("address").manyToOne(true).moveUnder("user").foreignKey("user_id")
 ```
 
-### Example with [Jasync-sql](https://github.com/jasync-sql/jasync-sql) queries
+### Example usage with [Jasync-sql](https://github.com/jasync-sql/jasync-sql) queries
+For the DB schema above, you can find the example Zeko usage with [Jasync-sql here](https://github.com/darkredz/Zeko-Data-Mapper/blob/dev/examples/zeko-vertx-query/src/main/kotlin/com/zeko/example/MainVerticle.kt#L35).
+The SQL structure and data for the sample app is [provided](https://github.com/darkredz/Zeko-Data-Mapper/tree/dev/examples/sql) too.
 
+Jasync-sql is a port of [mauricio/postgresql-async](https://github.com/mauricio/postgresql-async), to Kotlin.
+
+### Example usage with [Vert.x Common-sql](http://vertx.io/docs/vertx-sql-common/kotlin) queries
+If you use Vert.x common sql interface, such as the async [MySQL and postgresql client](https://vertx.io/docs/vertx-mysql-postgresql-client/java/)
+which uses Mauricio Linhares [async driver](https://github.com/mauricio/postgresql-async), you will find that the result return is typed as List of JsonArray
+
+Example using Zeko with vertx common sql results can be (found here)[https://github.com/darkredz/Zeko-Data-Mapper/blob/dev/examples/zeko-vertx-query/src/main/kotlin/com/zeko/example/MainVerticle.kt#L112]
