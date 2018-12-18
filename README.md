@@ -1,5 +1,10 @@
+
 # Zeko-Data-Mapper
-A lightweight data mapper library in Kotlin that helps to map the result of queries from your normalized dataset(from RDBMS or any source) back into relational mapped Hash maps
+![alt Zeko Data Mapper](./docs/assets/zeko-rabbit.png "Zeko lightweight data mapper")
+
+A lightweight, fast and simple data mapper library in Kotlin that helps to map the result of queries from your normalized dataset(from RDBMS, SQLite, CSV or any source) back into relational mapped Hash maps
+
+ps: Zeko turns out to be rabbit in Croatian, thus the logo :D
 
 To use, add these to your maven pom.xml
 
@@ -151,4 +156,5 @@ Jasync-sql is a port of [mauricio/postgresql-async](https://github.com/mauricio/
 If you use Vert.x common sql interface, such as the async [MySQL and postgresql client](https://vertx.io/docs/vertx-mysql-postgresql-client/java/)
 which uses Mauricio Linhares [async driver](https://github.com/mauricio/postgresql-async), you will find that the result return is typed as List of JsonArray
 
-Example using Zeko with vertx common sql results can be (found here)[https://github.com/darkredz/Zeko-Data-Mapper/blob/dev/examples/zeko-vertx-query/src/main/kotlin/com/zeko/example/MainVerticle.kt#L112]
+Example using Zeko with vertx common sql results can be [found here](https://github.com/darkredz/Zeko-Data-Mapper/blob/dev/examples/zeko-vertx-query/src/main/kotlin/com/zeko/example/MainVerticle.kt#L112)
+
