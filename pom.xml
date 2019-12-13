@@ -6,7 +6,7 @@
 
     <groupId>com.zeko.model</groupId>
     <artifactId>data-mapper</artifactId>
-    <version>1.3</version>
+    <version>1.4</version>
     <packaging>jar</packaging>
 
     <name>com.zeko.model data-mapper</name>
