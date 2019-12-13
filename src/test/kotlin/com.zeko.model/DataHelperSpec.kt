@@ -4,15 +4,14 @@ import com.caucho.quercus.env.Env
 import com.caucho.quercus.QuercusContext
 import com.caucho.quercus.env.ArrayValue
 import java.util.LinkedHashMap
-import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.given
-import org.jetbrains.spek.api.dsl.it
-import org.jetbrains.spek.api.dsl.on
+import org.spekframework.spek2.Spek
+import org.spekframework.spek2.style.specification.describe
+import org.spekframework.spek2.style.gherkin.Feature
 import kotlin.test.assertEquals
 
 class DataHelperSpec : Spek({
 
-    given("An array of 2 HashMap objects") {
+    describe("An array of 2 HashMap objects") {
         val all = ArrayList<LinkedHashMap<String, Any>>()
         all.add(linkedMapOf(
                 "id" to 123,
@@ -28,7 +27,7 @@ class DataHelperSpec : Spek({
                 "credit" to 986.08
         ))
 
-        on("convert result to json array") {
+        context("convert result to json array") {
             val result = DataHelper.toJsonArray(all)
             it("should not be empty") {
                 assertEquals(false, result.isEmpty)
@@ -37,7 +36,7 @@ class DataHelperSpec : Spek({
                 val size = result.size()
                 assertEquals(2, size)
             }
-            it("and should object with all the fields set") {
+            it("should object with all the fields set") {
                 assertEquals(123, result.getJsonObject(0).getInteger("id"))
                 assertEquals("Leng", result.getJsonObject(0).getString("name"))
                 assertEquals(12, result.getJsonObject(0).getInteger("age"))
@@ -45,7 +44,7 @@ class DataHelperSpec : Spek({
             }
         }
 
-        on("convert result to PHP array") {
+        context("convert result to PHP array") {
             val quercusContext = QuercusContext()
             val env = Env(quercusContext)
             val result = DataHelper.toPhpArray(env, all)

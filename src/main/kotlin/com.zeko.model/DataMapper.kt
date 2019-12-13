@@ -24,7 +24,7 @@ import java.util.stream.Collectors
 
 data class TableInfo(var key: String, var move_under: String? = null, var foreign_key: String? = null, var rename: String? = null,
                      var many_to_one: Boolean = false, var one_to_many: Boolean = false, var one_to_one: Boolean = false, var many_to_many: Boolean = false,
-                     var multiple_link: Boolean = false, var remove: List<String>? = null)
+                     var multiple_link: Boolean = false, var remove: List<String>? = null, var mapClass: Class<*>? = null)
 
 open class DataMapper {
 
@@ -182,6 +182,11 @@ open class DataMapper {
                                 for ((linkKey, linkRow0) in oriTblResult) {
 
                                     var linkRow = convertToMap(linkRow0)
+
+                                    if (tblInfo.mapClass != null) {
+                                        linkRow!!.put("_tbl", tbl)
+                                    }
+
                                     if (linkRow == null) continue
 
                                     if (foreignKey != linkRow[fk]) {
@@ -222,6 +227,10 @@ open class DataMapper {
                                 val linkRow = convertToMap(linkRow0)
                                 if (linkRow == null) continue
 
+                                if (tblInfo.mapClass != null) {
+                                    linkRow.put("_tbl", tbl)
+                                }
+
                                 if (foreignKey != linkRow[fk]) {
                                     (rows[tbl] as LinkedHashMap<String, Any>).remove(linkRowKey)
                                     continue
@@ -248,6 +257,10 @@ open class DataMapper {
                                 var firstItemKey = LinkedHashMap<String, Any>()
                                 for ((itmKey, item) in (rows[tbl] as LinkedHashMap<String, Any>)) {
                                     firstItemKey = (item as LinkedHashMap<String, Any>)
+
+                                    if (tblInfo.mapClass != null) {
+                                        item.put("_tbl", tbl)
+                                    }
                                     break
                                 }
                                 rows[tbl] = firstItemKey
@@ -285,6 +298,7 @@ open class DataMapper {
     fun flatMap(item: LinkedHashMap<String,*>): List<Any?> {
         val result = item.entries.stream()
                 .map({ x ->
+                    (x.value as LinkedHashMap<String,*>).remove("_tbl")
                     if (x.value is LinkedHashMap<*,*>) {
                         checkAndFlatMap(x.value as LinkedHashMap<String, Any>)
                     } else {
@@ -330,6 +344,73 @@ open class DataMapper {
                 var toAdd: Any = item
                 toAdd = checkAndFlatMap(toAdd as LinkedHashMap<String, Any>)
                 arrFinal.add(toAdd as LinkedHashMap<String, Any>)
+            }
+            return arrFinal
+        }
+        return arrayListOf()
+    }
+
+    fun flatMapStruct(item: LinkedHashMap<String,*>, allTableInfo: LinkedHashMap<String, TableInfo>): List<Any?> {
+        val result = item.entries.stream()
+                .map({ x ->
+                    val row = (x.value as LinkedHashMap<String,*>)
+
+                    if (row is LinkedHashMap<*,*>) {
+                        checkAndFlatMapStruct(row as LinkedHashMap<String, Any>, allTableInfo)
+                    } else {
+                        row
+                    }
+                })
+                .collect(Collectors.toList<Any?>())
+
+        return result
+    }
+
+    open fun checkAndFlatMapStruct(toAdd: LinkedHashMap<String, *>, allTableInfo: LinkedHashMap<String, TableInfo>): Any {
+        val toAdd2: LinkedHashMap<String, Any?> = toAdd.clone() as LinkedHashMap<String, Any?>
+        for ((key, itemNest) in toAdd) {
+            if (itemNest is LinkedHashMap<*,*>) {
+                if (itemNest.keys.isEmpty()) {
+                    toAdd2[key] = null
+                }
+                else if (itemNest.keys.first().toString().matches(Regex("^\\d+$"))) {
+                    toAdd2[key] = flatMapStruct(itemNest as LinkedHashMap<String,*>, allTableInfo)
+                } else {
+                    toAdd2[key] = checkAndFlatMapStruct(itemNest as LinkedHashMap<String,*>, allTableInfo)
+                }
+            } else {
+                if (key == "_tbl") {
+                    val kClass = allTableInfo[toAdd.get("_tbl")]!!.mapClass as Class<*>
+                    val clsInstance = kClass!!.constructors.first().newInstance(toAdd)
+                    return clsInstance
+                }
+            }
+        }
+        return toAdd2
+    }
+
+    open fun mapStruct(allTableInfo: LinkedHashMap<String, TableInfo>, arr: List<Any>, delimiter: String = "-"): ArrayList<Any> {
+        if (arr.size == 0) {
+            return arrayListOf()
+        }
+        val rs = mapRaw(allTableInfo, arr, delimiter, true, false)
+        //get the root table result since everything now is nested into objects.
+        if (rs != null && rs.size > 0) {
+            val rootTable = rs.values.first() as LinkedHashMap<String, LinkedHashMap<String, Any>>
+            val arrFinal = ArrayList<Any>()
+
+            var rootTblInfo: TableInfo? = null
+            for ((tblAlias, tblInfo) in allTableInfo) {
+                rootTblInfo = tblInfo
+                break
+            }
+            for ((key, item) in rootTable) {
+                var toAdd: Any = item
+                toAdd = checkAndFlatMapStruct(toAdd as LinkedHashMap<String, Any>, allTableInfo)
+
+                val kClass = rootTblInfo!!.mapClass
+                val clsInstance = kClass!!.constructors.first().newInstance(toAdd)
+                arrFinal.add(clsInstance)
             }
             return arrFinal
         }
