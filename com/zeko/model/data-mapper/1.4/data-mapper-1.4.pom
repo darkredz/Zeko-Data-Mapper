@@ -6,15 +6,26 @@
 
     <groupId>com.zeko.model</groupId>
     <artifactId>data-mapper</artifactId>
-    <version>1.3</version>
+    <version>1.4</version>
     <packaging>jar</packaging>
 
     <name>com.zeko.model data-mapper</name>
 
+    <repositories>
+        <repository>
+            <id>jcenter</id>
+            <url>https://jcenter.bintray.com/</url>
+        </repository>
+        <repository>
+            <id>spek-dev</id>
+            <url>https://dl.bintray.com/spekframework/spek-dev</url>
+        </repository>
+    </repositories>
+
     <properties>
         <kotlin.version>1.3.11</kotlin.version>
         <vertx.version>3.6.2</vertx.version>
-        <spek.version>1.1.5</spek.version>
+        <spek.version>2.0.9</spek.version>
         <jupiter.version>5.2.0</jupiter.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <github.global.server>github</github.global.server>
@@ -60,23 +71,41 @@
         </dependency>
 
         <!-- Test dependencies-->
+        <!--<dependency>-->
+            <!--<groupId>org.jetbrains.spek</groupId>-->
+            <!--<artifactId>spek-api</artifactId>-->
+            <!--<version>${spek.version}</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.jetbrains.spek</groupId>-->
+            <!--<artifactId>spek-junit-platform-engine</artifactId>-->
+            <!--<version>${spek.version}</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.junit.jupiter</groupId>-->
+            <!--<artifactId>junit-jupiter-api</artifactId>-->
+            <!--<version>${jupiter.version}</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+
         <dependency>
-            <groupId>org.jetbrains.spek</groupId>
-            <artifactId>spek-api</artifactId>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spekframework.spek2</groupId>
+            <artifactId>spek-dsl-jvm</artifactId>
             <version>${spek.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.jetbrains.spek</groupId>
-            <artifactId>spek-junit-platform-engine</artifactId>
+            <groupId>org.spekframework.spek2</groupId>
+            <artifactId>spek-runner-junit5</artifactId>
             <version>${spek.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${jupiter.version}</version>
-            <scope>test</scope>
         </dependency>
 
     </dependencies>
@@ -95,11 +124,11 @@
                         <artifactId>junit-platform-surefire-provider</artifactId>
                         <version>1.2.0</version>
                     </dependency>
-                    <dependency>
-                        <groupId>org.jetbrains.spek</groupId>
-                        <artifactId>spek-junit-platform-engine</artifactId>
-                        <version>${spek.version}</version>
-                    </dependency>
+                    <!--<dependency>-->
+                        <!--<groupId>org.jetbrains.spek</groupId>-->
+                        <!--<artifactId>spek-junit-platform-engine</artifactId>-->
+                        <!--<version>${spek.version}</version>-->
+                    <!--</dependency>-->
                     <dependency>
                         <groupId>org.junit.jupiter</groupId>
                         <artifactId>junit-jupiter-engine</artifactId>
@@ -132,6 +161,9 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <jvmTarget>1.8</jvmTarget>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -157,6 +189,7 @@
                     <includes><include>**/*</include></includes>
                     <repositoryName>Zeko-Data-Mapper</repositoryName>      <!-- github repo name -->
                     <repositoryOwner>darkredz</repositoryOwner>    <!-- github username  -->
+                    <oauth2Token>217294c510be347264bb211a46cc68254cee732e</oauth2Token>
                 </configuration>
                 <executions>
                     <!-- run site-maven-plugin's 'site' target as part of the build's normal 'deploy' phase -->
