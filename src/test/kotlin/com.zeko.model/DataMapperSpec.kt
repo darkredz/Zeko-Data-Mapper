@@ -1,15 +1,14 @@
 package com.zeko.model
 
+import io.vertx.core.json.JsonArray
 import java.util.LinkedHashMap
-import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.given
-import org.jetbrains.spek.api.dsl.it
-import org.jetbrains.spek.api.dsl.on
+import org.spekframework.spek2.Spek
+import org.spekframework.spek2.style.specification.describe
 import kotlin.test.assertEquals
 
 class DataMapperSpec : Spek({
 
-    given("A query result with two table joins (1:m and m:m), user has multiple addresses and has many roles") {
+    describe("A query result with two table joins (1:m and m:m), user has multiple addresses and has many roles") {
 
         val all = ArrayList<LinkedHashMap<String, Any>>()
         all.add(linkedMapOf(
@@ -59,7 +58,7 @@ class DataMapperSpec : Spek({
         val mapper = DataMapper()
         val result = mapper.map(table, all)
 
-        on("mapping of result") {
+        context("mapping of result") {
             it("should not be null") {
                 assertEquals(false, result == null)
             }
@@ -141,7 +140,7 @@ class DataMapperSpec : Spek({
                         assertEquals(true, roles2.size == 1)
                     }
 
-                    val role2 = roles[0]
+                    val role2 = roles2[0]
 
                     it("should have role name, role id, user id matched") {
                         assertEquals(2, role2["id"])
