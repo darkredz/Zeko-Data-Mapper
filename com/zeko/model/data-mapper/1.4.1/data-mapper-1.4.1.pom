@@ -6,7 +6,7 @@
 
     <groupId>com.zeko.model</groupId>
     <artifactId>data-mapper</artifactId>
-    <version>1.4</version>
+    <version>1.4.1</version>
     <packaging>jar</packaging>
 
     <name>com.zeko.model data-mapper</name>
@@ -189,7 +189,7 @@
                     <includes><include>**/*</include></includes>
                     <repositoryName>Zeko-Data-Mapper</repositoryName>      <!-- github repo name -->
                     <repositoryOwner>darkredz</repositoryOwner>    <!-- github username  -->
-                    <oauth2Token>217294c510be347264bb211a46cc68254cee732e</oauth2Token>
+                    <oauth2Token>478fe67e763496cc2181283921069c14182e7559</oauth2Token>
                 </configuration>
                 <executions>
                     <!-- run site-maven-plugin's 'site' target as part of the build's normal 'deploy' phase -->
