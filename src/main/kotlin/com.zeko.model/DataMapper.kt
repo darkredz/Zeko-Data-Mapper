@@ -389,6 +389,11 @@ open class DataMapper {
         return toAdd2
     }
 
+
+    open fun mapStruct(mapConf: MapperConfig, arr: List<Any>, delimiter: String = "-"): ArrayList<Any> {
+        return mapStruct(mapConf.toTableInfo(), arr)
+    }
+
     open fun mapStruct(allTableInfo: LinkedHashMap<String, TableInfo>, arr: List<Any>, delimiter: String = "-"): ArrayList<Any> {
         if (arr.size == 0) {
             return arrayListOf()

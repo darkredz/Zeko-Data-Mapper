@@ -127,7 +127,7 @@
         <dependency>
             <groupId>com.zeko.model</groupId>
             <artifactId>data-mapper</artifactId>
-            <version>1.3</version>
+            <version>1.4.1</version>
         </dependency>
         <!--<dependency>-->
             <!--<groupId>com.zeko.model</groupId>-->
@@ -210,7 +210,7 @@
                 </executions>
 
                 <configuration>
-                    <redeploy>true</redeploy>
+                    <redeploy>false</redeploy>
                 </configuration>
             </plugin>
 
