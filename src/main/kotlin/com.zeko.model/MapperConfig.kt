@@ -122,10 +122,15 @@ class MapperConfig(defaultPrimaryKey: String, autoRemoveLinkKey: Boolean) {
         return this
     }
 
-
     fun moveUnder(fieldName: String): MapperConfig {
         val table = this.currentTable()
         table.move_under = fieldName
+        return this
+    }
+
+    fun mapTo(mapClass: Class<*>): MapperConfig {
+        val table = this.currentTable()
+        table.mapClass = mapClass
         return this
     }
 
@@ -138,7 +143,7 @@ class MapperConfig(defaultPrimaryKey: String, autoRemoveLinkKey: Boolean) {
         this.tableInfo = this.sortTableInfo(this.tableInfo)
         return this.tableInfo
     }
-    
+
     fun sortTableInfo(tables: LinkedHashMap<String, TableInfo>): LinkedHashMap<String, TableInfo> {
         val tableList = tables.keys.asIterable()
         val firstTable = tableList.first()
