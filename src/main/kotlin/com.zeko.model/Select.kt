@@ -24,25 +24,37 @@ import java.util.LinkedHashMap
 
 data class SelectInfo(val columns: List<String>, val sqlFields: String)
 
-class Select {
-    private val fieldsToSelect by lazy {
+open class Select {
+    protected val fieldsToSelect by lazy {
         LinkedHashMap<String, Array<String>>()
     }
-    private lateinit var currentTable: String
-    private var espChar: String
-    private var asChar: String
+    protected lateinit var currentTable: String
 
-    constructor(espChar: String =  "`", asChar: String = "=") {
+    var espChar: String
+        get() = field
+    var asChar: String
+        get() = field
+    var espTableName: Boolean
+        get() = field
+
+    constructor(espChar: String =  "`", asChar: String = "=", espTableName: Boolean = false) {
         this.espChar = espChar
         this.asChar = asChar
+        this.espTableName = espTableName
     }
 
-    fun table(name: String): Select {
+    constructor(espChar: String =  "`", espTableName: Boolean = false) {
+        this.espChar = espChar
+        this.asChar = "="
+        this.espTableName = espTableName
+    }
+
+    open fun table(name: String): Select {
         currentTable = name
         return this
     }
 
-    fun fields(vararg names: String): Select {
+    open fun fields(vararg names: String): Select {
         if (!currentTable.isNullOrEmpty()) {
             fieldsToSelect[currentTable] = names as Array<String>
         }
@@ -57,7 +69,15 @@ class Select {
             for (colName in cols) {
                 if (colName.indexOf("=") != -1) {
                     val parts = colName.split(asChar)
-                    val tblLinkedCol = parts[0].trim()
+                    val partField = parts[0].trim()
+                    var tblLinkedCol: String
+                    if (!espTableName) {
+                        tblLinkedCol = partField
+                    } else {
+                        val fieldParts = partField.split(".")
+                        val tblLinked = fieldParts[0]
+                        tblLinkedCol = "${espChar}${tblLinked}${espChar}.${fieldParts[1]}"
+                    }
                     val selfCol = parts[1].trim()
 
                     val aliasName = "$tbl-$selfCol"
@@ -66,7 +86,8 @@ class Select {
                 } else {
                     val aliasName = "$tbl-$colName"
                     columns.add(aliasName)
-                    selectFields.add("$tbl.$colName as $espChar$aliasName$espChar")
+                    val tblFinal = if (espTableName) "$espChar$tbl$espChar" else tbl
+                    selectFields.add("$tblFinal.$colName as $espChar$aliasName$espChar")
                 }
             }
         }
