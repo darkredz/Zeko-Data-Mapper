@@ -10,22 +10,10 @@ ps: Zeko turns out to be rabbit in Croatian, thus the logo :D
 
 ### To use, add these to your maven pom.xml
 
-
-    <repositories>
-      <repository>
-        <id>Zeko-Data-Mapper-mvn-repo</id>
-        <url>https://raw.github.com/darkredz/Zeko-Data-Mapper/mvn-repo/</url>
-        <snapshots>
-          <enabled>true</enabled>
-          <updatePolicy>always</updatePolicy>
-        </snapshots>
-      </repository>
-    </repositories>
-    
     <dependency>
-      <groupId>com.zeko.model</groupId>
-      <artifactId>data-mapper</artifactId>
-      <version>1.3</version>
+      <groupId>com.github.darkredz</groupId>
+      <artifactId>zeko-data-mapper</artifactId>
+      <version>1.5.9</version>
     </dependency>
     
     
