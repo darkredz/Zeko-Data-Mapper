@@ -1,4 +1,4 @@
-package com.zeko.model
+package io.zeko.model
 
 import com.caucho.quercus.env.Env
 import com.caucho.quercus.QuercusContext

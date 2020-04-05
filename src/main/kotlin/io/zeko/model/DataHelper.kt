@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package com.zeko.model
+package io.zeko.model
 
 import com.caucho.quercus.env.ArrayValue
 import com.caucho.quercus.env.ArrayValueImpl

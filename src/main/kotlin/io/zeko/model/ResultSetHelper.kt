@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package com.zeko.model
+package io.zeko.model
 
 import com.github.jasync.sql.db.ResultSet
 import io.vertx.core.json.JsonArray

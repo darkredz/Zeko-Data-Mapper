@@ -1,4 +1,4 @@
-package com.zeko.model
+package io.zeko.model
 
 import io.vertx.core.json.JsonArray
 import java.util.LinkedHashMap

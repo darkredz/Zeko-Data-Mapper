@@ -1,8 +1,8 @@
-package com.zeko.model.declarations
+package io.zeko.model.declarations
 
 import com.github.jasync.sql.db.ResultSet
-import com.zeko.model.ResultSetHelper
-import com.zeko.model.SelectInfo
+import io.zeko.model.ResultSetHelper
+import io.zeko.model.SelectInfo
 import io.vertx.core.json.JsonArray
 import org.joda.time.DateTimeZone
 import org.joda.time.base.BaseLocal
