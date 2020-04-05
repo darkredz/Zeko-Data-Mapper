@@ -4,10 +4,15 @@
 
     <groupId>com.github.darkredz</groupId>
     <artifactId>zeko-data-mapper</artifactId>
-    <version>1.5.1-SNAPSHOT</version>
+    <version>1.5.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
+    <description>
+        A lightweight, fast and simple data mapper library in Kotlin that
+        helps to map the result of queries from your normalized dataset(from RDBMS, SQLite, CSV or any source)
+        back into relational mapped Hash maps
+    </description>
     <url>https://github.com/darkredz/Zeko-Data-Mapper</url>
 
     <!-- License for the project, pick a License from opensource.org -->
@@ -305,6 +310,25 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.jetbrains.dokka</groupId>
+                <artifactId>dokka-maven-plugin</artifactId>
+                <version>0.10.0</version>
+                <executions>
+                    <execution>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>dokka</goal>
+                            <goal>javadoc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sourceDirectories>
+                        <dir>src/main/kotlin</dir>
+                    </sourceDirectories>
+                </configuration>
+            </plugin>
+            <plugin>
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>${version.maven-deploy-plugin}</version>
                 <executions>
@@ -333,9 +357,6 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>${version.maven-release-plugin}</version>
                 <configuration>
-                    <checkModificationExcludes>
-                        <checkModificationExclude>pom.xml</checkModificationExclude>
-                    </checkModificationExcludes>
                     <localCheckout>true</localCheckout>
                     <pushChanges>false</pushChanges>
                     <mavenExecutorId>forked-path</mavenExecutorId>
