@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package com.zeko.model
+package io.zeko.model
 
 class MapperConfig(defaultPrimaryKey: String, autoRemoveLinkKey: Boolean) {
 
@@ -37,11 +37,11 @@ class MapperConfig(defaultPrimaryKey: String, autoRemoveLinkKey: Boolean) {
         return this
     }
 
-    fun table(tableName: String): MapperConfig  {
+    fun table(tableName: String): MapperConfig {
         return table(tableName, null)
     }
 
-    fun table(tableName: String, defaultPrimaryKey: String?): MapperConfig  {
+    fun table(tableName: String, defaultPrimaryKey: String?): MapperConfig {
         this.tableInfo[tableName] = TableInfo("id", null, null, null, false, false, false, false, false, null)
         this.latestTable = tableName
         if (defaultPrimaryKey != null) {
@@ -57,7 +57,7 @@ class MapperConfig(defaultPrimaryKey: String, autoRemoveLinkKey: Boolean) {
         return this.tableInfo[this.latestTable] as TableInfo
     }
 
-    fun removeLinkKey(): MapperConfig  {
+    fun removeLinkKey(): MapperConfig {
         this.remove(this.currentTable().foreign_key as String)
         return this
     }

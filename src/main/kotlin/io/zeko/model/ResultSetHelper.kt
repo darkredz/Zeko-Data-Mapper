@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package com.zeko.model
+package io.zeko.model
 
 import com.github.jasync.sql.db.ResultSet
 import io.vertx.core.json.JsonArray
@@ -40,7 +40,16 @@ class ResultSetHelper {
             return results
         }
 
-        fun toMaps(rows: ResultSet, columns: List<String>, timeProcessor: ((BaseLocal, DateTimeZone?, DateTimeZone?) -> Any)? = null, tzFrom: DateTimeZone?, tzTo: DateTimeZone?): List<LinkedHashMap<String, Any?>> {
+        fun toMaps(resultSet: io.vertx.ext.sql.ResultSet, columns: List<String>, timeProcessor: ((BaseLocal, DateTimeZone?, DateTimeZone?) -> Any)? = null, tzFrom: DateTimeZone? = null, tzTo: DateTimeZone? = null): List<LinkedHashMap<String, Any?>> {
+            val results = ArrayList<LinkedHashMap<String, Any?>>(resultSet.results.size)
+            val rows = resultSet.results
+            for (row in rows) {
+                results.add(convertRowToMap(row.toList(), columns, timeProcessor, tzFrom, tzTo))
+            }
+            return results
+        }
+
+        fun toMaps(rows: ResultSet, columns: List<String>, timeProcessor: ((BaseLocal, DateTimeZone?, DateTimeZone?) -> Any)? = null, tzFrom: DateTimeZone? = null, tzTo: DateTimeZone? = null): List<LinkedHashMap<String, Any?>> {
             val results = ArrayList<LinkedHashMap<String, Any?>>(rows.size)
             for (row in rows) {
                 results.add(convertRowToMap(row.toList(), columns, timeProcessor, tzFrom, tzTo))
@@ -48,7 +57,22 @@ class ResultSetHelper {
             return results
         }
 
-        fun convertRowToMap(row: List<Any?>, columns: List<String>, timeProcessor: ((BaseLocal, DateTimeZone?, DateTimeZone?) -> Any)? = null, tzFrom: DateTimeZone?, tzTo: DateTimeZone?): LinkedHashMap<String, Any?> {
+        fun toMaps(rs: java.sql.ResultSet, columns: List<String>, timeProcessor: ((BaseLocal, DateTimeZone?, DateTimeZone?) -> Any)? = null, tzFrom: DateTimeZone? = null, tzTo: DateTimeZone? = null): List<LinkedHashMap<String, Any?>> {
+            val results = java.util.ArrayList<LinkedHashMap<String, Any?>>()
+            val md = rs.metaData
+            val totalColumns = md.columnCount
+
+            while (rs.next()) {
+                val row = arrayListOf<Any?>()
+                for (i in 1..totalColumns) {
+                    row.add(rs.getObject(i))
+                }
+                results.add(convertRowToMap(row, columns, timeProcessor, tzFrom, tzTo))
+            }
+            return results
+        }
+
+        fun convertRowToMap(row: List<Any?>, columns: List<String>, timeProcessor: ((BaseLocal, DateTimeZone?, DateTimeZone?) -> Any)? = null, tzFrom: DateTimeZone? = null, tzTo: DateTimeZone? = null): LinkedHashMap<String, Any?> {
             val obj = java.util.LinkedHashMap<String, Any?>()
 
             for ((i, value) in row.withIndex()) {

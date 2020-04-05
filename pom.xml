@@ -1,17 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.zeko.model</groupId>
-    <artifactId>data-mapper</artifactId>
-    <version>1.4.1</version>
+    <groupId>com.github.darkredz</groupId>
+    <artifactId>zeko-data-mapper</artifactId>
+    <version>1.5.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>com.zeko.model data-mapper</name>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <url>https://github.com/darkredz/Zeko-Data-Mapper</url>
+
+    <!-- License for the project, pick a License from opensource.org -->
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <!-- Contact for developers on project -->
+    <developers>
+        <developer>
+            <name>Leng Sheng Hong</name>
+            <email>darkredz@gmail.com</email>
+            <organization>Github</organization>
+            <!-- URL for Organization, URL to your github profile work well here -->
+            <organizationUrl>https://github.com/darkredz</organizationUrl>
+            <timezone>UTC+0:</timezone>
+        </developer>
+    </developers>
+
+    <!-- Source Control Information, Github Stuff -->
+    <scm>
+        <!-- Should be format scm:git:git or scm:git:https -->
+        <connection>scm:git:https://github.com/darkredz/Zeko-Data-Mapper.git</connection>
+        <developerConnection>scm:git:ssh://github.com/darkredz/Zeko-Data-Mapper.git</developerConnection>
+        <url>https://github.com/darkredz/Zeko-Data-Mapper</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/
+            </url>
+        </repository>
+    </distributionManagement>
 
     <repositories>
+        <repository>
+            <id>mvnrepository</id>
+            <url>http://mvnrepository.com/artifact/</url>
+        </repository>
         <repository>
             <id>jcenter</id>
             <url>https://jcenter.bintray.com/</url>
@@ -29,6 +74,29 @@
         <jupiter.version>5.2.0</jupiter.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <github.global.server>github</github.global.server>
+        <version.maven-compiler-plugin>3.6.0</version.maven-compiler-plugin>
+        <version.maven-surefire-plugin>2.19.1</version.maven-surefire-plugin>
+        <version.maven-resources-plugin>3.0.1</version.maven-resources-plugin>
+        <version.maven-source-plugin>3.0.1</version.maven-source-plugin>
+        <version.maven-javadoc-plugin>2.10.4</version.maven-javadoc-plugin>
+        <version.nexus-staging-maven-plugin>1.6.7</version.nexus-staging-maven-plugin>
+        <version.maven-release-plugin>2.5.3</version.maven-release-plugin>
+        <version.maven-scm-provider-gitexe>1.9.5</version.maven-scm-provider-gitexe>
+        <version.jacoco-maven-plugin>0.7.7.201606060606</version.jacoco-maven-plugin>
+        <version.coveralls-maven-plugin>4.3.0</version.coveralls-maven-plugin>
+        <version.maven-site-plugin>3.5.1</version.maven-site-plugin>
+        <version.maven-pmd-plugin>3.0.1</version.maven-pmd-plugin>
+        <version.findbugs-maven-plugin>3.0.1</version.findbugs-maven-plugin>
+        <version.maven-changelog-plugin>2.3</version.maven-changelog-plugin>
+        <version.taglist-maven-plugin>2.4</version.taglist-maven-plugin>
+        <version.maven-project-info-reports-plugin>2.8</version.maven-project-info-reports-plugin>
+        <version.maven-checkstyle-plugin>2.10</version.maven-checkstyle-plugin>
+        <version.cobertura-maven-plugin>2.6</version.cobertura-maven-plugin>
+        <version.maven-surefire-report-plugin>2.18.1</version.maven-surefire-report-plugin>
+        <version.maven-jxr-plugin>2.5</version.maven-jxr-plugin>
+        <version.maven-gpg-plugin>1.6</version.maven-gpg-plugin>
+        <version.maven-deploy-plugin>2.8.2</version.maven-deploy-plugin>
+        <version.maven-scm-provider-gitexe>1.9.5</version.maven-scm-provider-gitexe>
     </properties>
 
     <dependencies>
@@ -74,27 +142,6 @@
             <artifactId>vertx-sql-common</artifactId>
             <version>${vertx.version}</version>
         </dependency>
-
-        <!-- Test dependencies-->
-        <!--<dependency>-->
-            <!--<groupId>org.jetbrains.spek</groupId>-->
-            <!--<artifactId>spek-api</artifactId>-->
-            <!--<version>${spek.version}</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.jetbrains.spek</groupId>-->
-            <!--<artifactId>spek-junit-platform-engine</artifactId>-->
-            <!--<version>${spek.version}</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.junit.jupiter</groupId>-->
-            <!--<artifactId>junit-jupiter-api</artifactId>-->
-            <!--<version>${jupiter.version}</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
@@ -115,6 +162,37 @@
 
     </dependencies>
 
+    <profiles>
+        <!-- GPG Signature on release -->
+        <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${version.maven-gpg-plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
         <testSourceDirectory>src/test/kotlin</testSourceDirectory>
@@ -129,11 +207,6 @@
                         <artifactId>junit-platform-surefire-provider</artifactId>
                         <version>1.2.0</version>
                     </dependency>
-                    <!--<dependency>-->
-                        <!--<groupId>org.jetbrains.spek</groupId>-->
-                        <!--<artifactId>spek-junit-platform-engine</artifactId>-->
-                        <!--<version>${spek.version}</version>-->
-                    <!--</dependency>-->
                     <dependency>
                         <groupId>org.junit.jupiter</groupId>
                         <artifactId>junit-jupiter-engine</artifactId>
@@ -182,45 +255,101 @@
                     </archive>
                 </configuration>
             </plugin>
+
             <plugin>
-                <groupId>com.github.github</groupId>
-                <artifactId>site-maven-plugin</artifactId>
-                <version>0.12</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${version.maven-compiler-plugin}</version>
                 <configuration>
-                    <message>Maven artifacts for ${project.version}</message>  <!-- git commit message -->
-                    <noJekyll>true</noJekyll>                                  <!-- disable webpage processing -->
-                    <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory> <!-- matches distribution management repository url above -->
-                    <branch>refs/heads/mvn-repo</branch>                       <!-- remote branch name -->
-                    <includes><include>**/*</include></includes>
-                    <repositoryName>Zeko-Data-Mapper</repositoryName>      <!-- github repo name -->
-                    <repositoryOwner>darkredz</repositoryOwner>    <!-- github username  -->
-                    <oauth2Token></oauth2Token>
+                    <encoding>UTF-8</encoding>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <showDeprecation>true</showDeprecation>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${version.maven-resources-plugin}</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${version.maven-source-plugin}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${version.maven-javadoc-plugin}</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
                 </configuration>
                 <executions>
-                    <!-- run site-maven-plugin's 'site' target as part of the build's normal 'deploy' phase -->
                     <execution>
+                        <id>attach-javadoc</id>
                         <goals>
-                            <goal>site</goal>
+                            <goal>jar</goal>
                         </goals>
-                        <phase>deploy</phase>
                     </execution>
                 </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-deploy-plugin</artifactId>
-                <version>2.8.1</version>
+                <version>${version.maven-deploy-plugin}</version>
+                <executions>
+                    <execution>
+                        <id>default-deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>${version.nexus-staging-maven-plugin}</version>
+                <extensions>true</extensions>
                 <configuration>
-                    <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${version.maven-release-plugin}</version>
+                <configuration>
+                    <checkModificationExcludes>
+                        <checkModificationExclude>pom.xml</checkModificationExclude>
+                    </checkModificationExcludes>
+                    <localCheckout>true</localCheckout>
+                    <pushChanges>false</pushChanges>
+                    <mavenExecutorId>forked-path</mavenExecutorId>
+                    <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.scm</groupId>
+                        <artifactId>maven-scm-provider-gitexe</artifactId>
+                        <version>${version.maven-scm-provider-gitexe}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
 
-    <distributionManagement>
-        <repository>
-            <id>internal.repo</id>
-            <name>Temporary Staging Repository</name>
-            <url>file://${project.build.directory}/mvn-repo</url>
-        </repository>
-    </distributionManagement>
 </project>

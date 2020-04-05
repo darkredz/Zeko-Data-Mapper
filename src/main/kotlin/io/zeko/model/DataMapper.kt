@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-package com.zeko.model
+package io.zeko.model
 
 import java.util.stream.Collectors
 
@@ -27,6 +27,11 @@ data class TableInfo(var key: String, var move_under: String? = null, var foreig
                      var multiple_link: Boolean = false, var remove: List<String>? = null, var mapClass: Class<*>? = null)
 
 open class DataMapper {
+    companion object {
+        fun create(): DataMapper {
+            return DataMapper()
+        }
+    }
 
     fun mapRaw(allTableInfo: LinkedHashMap<String, TableInfo>, arr: List<Any>, delimiter: String = "-", nested: Boolean = true, objectListWithID: Boolean = false): LinkedHashMap<String, LinkedHashMap<String, Any?>?> {
         var flattenResult = LinkedHashMap<String, LinkedHashMap<String, Any?>?>();
