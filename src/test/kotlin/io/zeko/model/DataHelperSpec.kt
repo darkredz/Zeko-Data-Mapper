@@ -1,8 +1,5 @@
 package io.zeko.model
 
-import com.caucho.quercus.env.Env
-import com.caucho.quercus.QuercusContext
-import com.caucho.quercus.env.ArrayValue
 import java.util.LinkedHashMap
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
@@ -41,30 +38,6 @@ class DataHelperSpec : Spek({
                 assertEquals("Leng", result.getJsonObject(0).getString("name"))
                 assertEquals(12, result.getJsonObject(0).getInteger("age"))
                 assertEquals(856.87, result.getJsonObject(0).getDouble("credit"))
-            }
-        }
-
-        context("convert result to PHP array") {
-            val quercusContext = QuercusContext()
-            val env = Env(quercusContext)
-            val result = DataHelper.toPhpArray(env, all)
-
-            it("should not be null") {
-                assertEquals(false, result == null)
-            }
-            it("should not be empty") {
-                assertEquals(false, result.isEmpty)
-            }
-            it("should have 2 element") {
-                assertEquals(2, result.size, "Got " + result.size)
-            }
-            it("and should object with field id, name, age") {
-                val obj = result.get(0) as ArrayValue
-                val map = obj.toJavaMap(env, HashMap::class.java)
-                assertEquals(123, map.get("id"))
-                assertEquals("Leng", map.get("name"))
-                assertEquals(12, map.get("age"))
-                assertEquals(856.87, map.get("credit"))
             }
         }
     }

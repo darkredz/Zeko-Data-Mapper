@@ -20,24 +20,12 @@
 
 package io.zeko.model
 
-import com.caucho.quercus.env.ArrayValue
-import com.caucho.quercus.env.ArrayValueImpl
-import com.caucho.quercus.env.Env
 import io.vertx.core.json.JsonArray
 import io.vertx.core.json.JsonObject
 import java.util.LinkedHashMap
 
 class DataHelper {
-
     companion object {
-        fun toPhpArray(env: Env, rs: List<LinkedHashMap<String, Any>>): ArrayValue {
-            val arr = ArrayValueImpl()
-            for (map in rs) {
-                arr.append(env.wrapJava(map))
-            }
-            return arr
-        }
-
         fun toJsonArray(rs: List<LinkedHashMap<String, Any>>): JsonArray {
             val arr = JsonArray()
             for (map in rs) {
