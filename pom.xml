@@ -4,7 +4,7 @@
 
     <groupId>com.github.darkredz</groupId>
     <artifactId>zeko-data-mapper</artifactId>
-    <version>1.5.3-SNAPSHOT</version>
+    <version>1.5.4-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -202,6 +202,16 @@
         <sourceDirectory>src/main/kotlin</sourceDirectory>
         <testSourceDirectory>src/test/kotlin</testSourceDirectory>
 
+        <resources>
+            <resource>
+                <directory>${project.basedir}</directory>
+                <excludes>
+                    <exclude>docs</exclude>
+                    <exclude>examples</exclude>
+                </excludes>
+            </resource>
+        </resources>
+
         <plugins>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -317,8 +327,7 @@
                     <execution>
                         <phase>pre-site</phase>
                         <goals>
-                            <goal>dokka</goal>
-                            <goal>javadoc</goal>
+                            <goal>javadocJar</goal>
                         </goals>
                     </execution>
                 </executions>
