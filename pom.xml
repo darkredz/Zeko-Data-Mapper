@@ -42,7 +42,7 @@
         <connection>scm:git:https://github.com/darkredz/Zeko-Data-Mapper.git</connection>
         <developerConnection>scm:git:ssh://github.com/darkredz/Zeko-Data-Mapper.git</developerConnection>
         <url>https://github.com/darkredz/Zeko-Data-Mapper</url>
-        <tag>HEAD</tag>
+        <tag>1.5.6</tag>
     </scm>
 
     <distributionManagement>
@@ -126,11 +126,6 @@
             <groupId>io.vertx</groupId>
             <artifactId>vertx-core</artifactId>
             <version>${vertx.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.caucho</groupId>
-            <artifactId>quercus</artifactId>
-            <version>4.0.45</version>
         </dependency>
         <dependency>
             <groupId>com.github.jasync-sql</groupId>
@@ -296,17 +291,14 @@
                 <version>${version.maven-source-plugin}</version>
                 <configuration>
                     <excludes>
-                        <exclude>docs</exclude>
-                        <exclude>examples</exclude>
-                        <exclude>target</exclude>
+                        <exclude>**/*.jar</exclude>
                     </excludes>
                 </configuration>
                 <executions>
                     <execution>
-                        <phase>package</phase>
                         <id>attach-sources</id>
                         <goals>
-                            <goal>jar-no-fork</goal>
+                            <goal>jar</goal>
                         </goals>
                     </execution>
                 </executions>
