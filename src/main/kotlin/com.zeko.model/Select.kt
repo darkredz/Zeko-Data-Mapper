@@ -28,7 +28,7 @@ open class Select {
     protected val fieldsToSelect by lazy {
         LinkedHashMap<String, Array<String>>()
     }
-    protected lateinit var currentTable: String
+    protected var currentTable: String = ""
 
     var espChar: String
         get() = field
@@ -55,9 +55,7 @@ open class Select {
     }
 
     open fun fields(vararg names: String): Select {
-        if (!currentTable.isNullOrEmpty()) {
-            fieldsToSelect[currentTable] = names as Array<String>
-        }
+        fieldsToSelect[currentTable] = names as Array<String>
         return this
     }
 
@@ -79,15 +77,22 @@ open class Select {
                         tblLinkedCol = "${espChar}${tblLinked}${espChar}.${fieldParts[1]}"
                     }
                     val selfCol = parts[1].trim()
-
-                    val aliasName = "$tbl-$selfCol"
-                    columns.add(aliasName)
-                    selectFields.add("$tblLinkedCol as $espChar$aliasName$espChar")
+                    if (tbl == "") {
+                        selectFields.add("$colName")
+                    } else {
+                        val aliasName = "$tbl-$selfCol"
+                        columns.add(aliasName)
+                        selectFields.add("$tblLinkedCol as $espChar$aliasName$espChar")
+                    }
                 } else {
-                    val aliasName = "$tbl-$colName"
-                    columns.add(aliasName)
-                    val tblFinal = if (espTableName) "$espChar$tbl$espChar" else tbl
-                    selectFields.add("$tblFinal.$colName as $espChar$aliasName$espChar")
+                    if (tbl == "") {
+                        selectFields.add("$colName")
+                    } else {
+                        val aliasName = "$tbl-$colName"
+                        columns.add(aliasName)
+                        val tblFinal = if (espTableName) "$espChar$tbl$espChar" else tbl
+                        selectFields.add("$tblFinal.$colName as $espChar$aliasName$espChar")
+                    }
                 }
             }
         }
