@@ -11,9 +11,9 @@ ps: Zeko turns out to be rabbit in Croatian, thus the logo :D
 ### To use, add these to your maven pom.xml
 
     <dependency>
-      <groupId>com.github.darkredz</groupId>
+      <groupId>io.zeko</groupId>
       <artifactId>zeko-data-mapper</artifactId>
-      <version>1.5.9</version>
+      <version>1.5.10</version>
     </dependency>
     
     

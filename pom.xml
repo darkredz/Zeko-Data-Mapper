@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.darkredz</groupId>
+    <groupId>io.zeko</groupId>
     <artifactId>zeko-data-mapper</artifactId>
-    <version>1.5.10-SNAPSHOT</version>
+    <version>1.5.11-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -32,7 +32,7 @@
             <organization>Github</organization>
             <!-- URL for Organization, URL to your github profile work well here -->
             <organizationUrl>https://github.com/darkredz</organizationUrl>
-            <timezone>UTC+0:</timezone>
+            <timezone>UTC+08:00</timezone>
         </developer>
     </developers>
 
@@ -166,6 +166,7 @@
             <groupId>org.spekframework.spek2</groupId>
             <artifactId>spek-runner-junit5</artifactId>
             <version>${spek.version}</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
@@ -204,16 +205,6 @@
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
         <testSourceDirectory>src/test/kotlin</testSourceDirectory>
-
-        <resources>
-            <resource>
-                <directory>${project.basedir}</directory>
-                <excludes>
-                    <exclude>docs</exclude>
-                    <exclude>examples</exclude>
-                </excludes>
-            </resource>
-        </resources>
 
         <plugins>
             <plugin>
