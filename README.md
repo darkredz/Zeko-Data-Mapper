@@ -1,6 +1,6 @@
 
 # Zeko Data Mapper
-![alt Zeko Data Mapper](./docs/assets/zeko-rabbit.png "Zeko lightweight data mapper")
+![alt Zeko Data Mapper](./docs/assets/zeko-rabbit.svg "Zeko lightweight data mapper")
 
 A lightweight, fast and simple data mapper library in Kotlin that helps to map the result of queries from your normalized dataset(from RDBMS, SQLite, CSV or any source) back into relational mapped Hash maps
 
