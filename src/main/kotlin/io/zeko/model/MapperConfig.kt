@@ -128,9 +128,9 @@ class MapperConfig(defaultPrimaryKey: String, autoRemoveLinkKey: Boolean) {
         return this
     }
 
-    fun mapTo(mapClass: Class<*>): MapperConfig {
+    fun mapTo(dataClassHandler: ((dataMap: Map<String, Any?>) -> Any)?): MapperConfig {
         val table = this.currentTable()
-        table.mapClass = mapClass
+        table.dataClassHandler = dataClassHandler
         return this
     }
 

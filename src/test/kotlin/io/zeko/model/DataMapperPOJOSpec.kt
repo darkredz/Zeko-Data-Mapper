@@ -1,49 +1,37 @@
 package io.zeko.model
 
-import io.vertx.core.json.JsonArray
 import java.util.LinkedHashMap
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 import org.spekframework.spek2.style.gherkin.Feature
-import kotlin.reflect.KVisibility
-import kotlin.reflect.full.memberProperties
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-open class Entity(map: Map<String, Any?>) {
-    protected val defaultMap = map.withDefault { null }
-
-    override fun toString(): String {
-        var str = this::class.java.toString() + "{ "
-        this::class.memberProperties.forEach { member ->
-            if (member.visibility == KVisibility.PUBLIC) {
-                str += "${member.name}-> ${member.getter.call(this)}, "
-            }
-        }
-        return str.removeSuffix(", ") + " }"
-    }
+class User : Entity {
+    constructor(map: Map<String, Any?>) : super(map)
+    constructor(vararg props: Pair<String, Any?>) : super(*props)
+    var id: Int?     by map
+    var name: String? by map
+    var role_id: Int? by map
+    var role: List<Role>? by map
+    var address: List<Address>? by map
 }
 
-class User(map: Map<String, Any?>): Entity(map) {
-    val id: Int?     by defaultMap
-    val name: String? by defaultMap
-    val role_id: Int? by defaultMap
-    val role: List<Role>? by defaultMap
-    val address: List<Address>? by defaultMap
+class Role : Entity {
+    constructor(map: Map<String, Any?>) : super(map)
+    constructor(vararg props: Pair<String, Any?>) : super(*props)
+    val id: Int?     by map
+    val role_name: String? by map
+    val user_id: Int? by map
 }
 
-class Role(map: Map<String, Any?>): Entity(map) {
-    val id: Int?     by defaultMap
-    val role_name: String? by defaultMap
-    val user_id: Int? by defaultMap
-}
-
-
-class Address(map: Map<String, Any?>): Entity(map) {
-    val id: Int?     by defaultMap
-    val user_id: Int? by defaultMap
-    val street1: String? by defaultMap
-    val street2: String? by defaultMap
+class Address : Entity {
+    constructor(map: Map<String, Any?>) : super(map)
+    constructor(vararg props: Pair<String, Any?>) : super(*props)
+    var id: Int?     by map
+    var user_id: Int? by map
+    var street1: String? by map
+    var street2: String? by map
 }
 
 
@@ -92,9 +80,9 @@ class DataMapperPOJOSpec : Spek({
         ))
 
         val table = linkedMapOf<String, TableInfo>()
-        table["user"] = TableInfo(key = "id", mapClass = User::class.java)
-        table["role"] = TableInfo(key = "id", move_under = "user", foreign_key = "user_id", many_to_many = true, mapClass = Role::class.java)
-        table["address"] = TableInfo(key = "id", move_under = "user", foreign_key = "user_id", many_to_one = true, remove = listOf("user_id"), mapClass = Address::class.java)
+        table["user"] = TableInfo(key = "id", dataClassHandler = { User(it) })
+        table["role"] = TableInfo(key = "id", move_under = "user", foreign_key = "user_id", many_to_many = true, dataClassHandler = { Role(it) })
+        table["address"] = TableInfo(key = "id", move_under = "user", foreign_key = "user_id", many_to_one = true, remove = listOf("user_id"), dataClassHandler = { Address(it) })
 
         val mapper = DataMapper()
         val result = mapper.mapStruct(table, all) as List<User>

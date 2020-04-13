@@ -24,7 +24,7 @@ import java.util.stream.Collectors
 
 data class TableInfo(var key: String, var move_under: String? = null, var foreign_key: String? = null, var rename: String? = null,
                      var many_to_one: Boolean = false, var one_to_many: Boolean = false, var one_to_one: Boolean = false, var many_to_many: Boolean = false,
-                     var multiple_link: Boolean = false, var remove: List<String>? = null, var mapClass: Class<*>? = null)
+                     var multiple_link: Boolean = false, var remove: List<String>? = null, var dataClassHandler: ((dataMap: Map<String, Any?>) -> Any)? = null)
 
 open class DataMapper {
     companion object {
@@ -188,7 +188,7 @@ open class DataMapper {
 
                                     var linkRow = convertToMap(linkRow0)
 
-                                    if (tblInfo.mapClass != null) {
+                                    if (tblInfo.dataClassHandler != null) {
                                         linkRow!!.put("_tbl", tbl)
                                     }
 
@@ -232,7 +232,7 @@ open class DataMapper {
                                 val linkRow = convertToMap(linkRow0)
                                 if (linkRow == null) continue
 
-                                if (tblInfo.mapClass != null) {
+                                if (tblInfo.dataClassHandler != null) {
                                     linkRow.put("_tbl", tbl)
                                 }
 
@@ -263,7 +263,7 @@ open class DataMapper {
                                 for ((itmKey, item) in (rows[tbl] as LinkedHashMap<String, Any>)) {
                                     firstItemKey = (item as LinkedHashMap<String, Any>)
 
-                                    if (tblInfo.mapClass != null) {
+                                    if (tblInfo.dataClassHandler != null) {
                                         item.put("_tbl", tbl)
                                     }
                                     break
@@ -385,9 +385,11 @@ open class DataMapper {
                 }
             } else {
                 if (key == "_tbl") {
-                    val kClass = allTableInfo[toAdd.get("_tbl")]!!.mapClass as Class<*>
-                    val clsInstance = kClass!!.constructors.first().newInstance(toAdd)
-                    return clsInstance
+                    val handler = allTableInfo[toAdd.get("_tbl")]!!.dataClassHandler
+                    if (handler != null) {
+                        return handler(toAdd)
+                    }
+                    return toAdd
                 }
             }
         }
@@ -416,11 +418,12 @@ open class DataMapper {
             }
             for ((key, item) in rootTable) {
                 var toAdd: Any = item
-                toAdd = checkAndFlatMapStruct(toAdd as LinkedHashMap<String, Any>, allTableInfo)
+                toAdd = checkAndFlatMapStruct(toAdd as LinkedHashMap<String, Any>, allTableInfo) as Map<String, Any?>
 
-                val kClass = rootTblInfo!!.mapClass
-                val clsInstance = kClass!!.constructors.first().newInstance(toAdd)
-                arrFinal.add(clsInstance)
+                val handler = rootTblInfo?.dataClassHandler
+                if (handler != null) {
+                    arrFinal.add(handler(toAdd))
+                }
             }
             return arrFinal
         }

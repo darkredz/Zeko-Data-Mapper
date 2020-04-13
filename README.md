@@ -13,9 +13,14 @@ ps: Zeko turns out to be rabbit in Croatian, thus the logo :D
     <dependency>
       <groupId>io.zeko</groupId>
       <artifactId>zeko-data-mapper</artifactId>
-      <version>1.5.10</version>
+      <version>1.6.0</version>
     </dependency>
     
+    
+## Features
+- No configuration files, no XML, no YAML, no annotations, lightweight, easy to use
+- Fast startup & performance
+- No Reflections. Great for [GraalVM](https://www.graalvm.org/) and [Quarkus](https://quarkus.io/)
     
 ## Basic usage
 Use this library to denormalized your data from a plaintext CSV, in-memory data, RDBMS tables, etc.
