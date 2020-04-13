@@ -2,6 +2,18 @@
 # Zeko Data Mapper
 ![alt Zeko Data Mapper](./docs/assets/zeko-rabbit.svg "Zeko lightweight data mapper")
 
+<p align="left">
+    <a href="https://search.maven.org/search?q=g:%22io.zeko%22">
+        <img src="https://img.shields.io/maven-central/v/io.zeko/zeko-data-mapper.svg?label=Maven%20Central" alt="Maven Central" />
+    </a>
+    <a href="LICENSE">
+        <img src="https://img.shields.io/badge/license-Apache%202-blue.svg?maxAge=2592000" alt="Apache License 2" />
+    </a>
+    <a href="https://github.com/KotlinBy/awesome-kotlin">
+        <img src="https://kotlin.link/awesome-kotlin.svg" alt="Awesome Kotlin Badge" />
+    </a>
+</p>
+
 A lightweight, fast and simple data mapper library in Kotlin that helps to map the result of queries from your normalized dataset(from RDBMS, SQLite, CSV or any source) back into relational mapped Hash maps
 
 ps: Zeko turns out to be rabbit in Croatian, thus the logo :D
