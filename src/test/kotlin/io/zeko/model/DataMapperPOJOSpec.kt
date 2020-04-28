@@ -1,5 +1,6 @@
 package io.zeko.model
 
+import io.vertx.core.json.Json
 import java.util.LinkedHashMap
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
@@ -12,7 +13,7 @@ class User : Entity {
     constructor(vararg props: Pair<String, Any?>) : super(*props)
     var id: Int?     by map
     var name: String? by map
-    var role_id: Int? by map
+    var roleId: Int? by map
     var role: List<Role>? by map
     var address: List<Address>? by map
 }
@@ -21,15 +22,15 @@ class Role : Entity {
     constructor(map: Map<String, Any?>) : super(map)
     constructor(vararg props: Pair<String, Any?>) : super(*props)
     val id: Int?     by map
-    val role_name: String? by map
-    val user_id: Int? by map
+    val roleName: String? by map
+    val userId: Int? by map
 }
 
 class Address : Entity {
     constructor(map: Map<String, Any?>) : super(map)
     constructor(vararg props: Pair<String, Any?>) : super(*props)
     var id: Int?     by map
-    var user_id: Int? by map
+    var userId: Int? by map
     var street1: String? by map
     var street2: String? by map
 }
@@ -87,6 +88,8 @@ class DataMapperPOJOSpec : Spek({
         val mapper = DataMapper()
         val result = mapper.mapStruct(table, all) as List<User>
 
+        println(Json.encodePrettily(result))
+
         context("mapping of result") {
             it("should not be null") {
                 assertEquals(false, result == null)
@@ -108,7 +111,7 @@ class DataMapperPOJOSpec : Spek({
                 it("the first object in the array mapped should have all the user fields selected") {
                     assertEquals(1, result[0].id)
                     assertEquals("Leng", result[0].name)
-                    assertEquals(2, result[0].role_id)
+                    assertEquals(2, result[0].roleId)
                 }
 
                 val roles = result[0].role
@@ -130,8 +133,8 @@ class DataMapperPOJOSpec : Spek({
 
                     it("should have role name, role id, user id matched") {
                         assertEquals(2, role.id)
-                        assertEquals("Super Admin", role.role_name)
-                        assertEquals(1, role.user_id)
+                        assertEquals("Super Admin", role.roleName)
+                        assertEquals(1, role.userId)
                     }
                 }
 
@@ -169,7 +172,7 @@ class DataMapperPOJOSpec : Spek({
                 it("the 2nd object in the array mapped should have all the user fields selected") {
                     assertEquals(2, result[1].id)
                     assertEquals("Superman", result[1].name)
-                    assertEquals(2, result[1].role_id)
+                    assertEquals(2, result[1].roleId)
                 }
 
                 val roles2 = result[1].role
@@ -191,8 +194,8 @@ class DataMapperPOJOSpec : Spek({
 
                     it("should have role name, role id, user id matched") {
                         assertEquals(2, role2.id)
-                        assertEquals("Super Admin", role2.role_name)
-                        assertEquals(2, role2.user_id)
+                        assertEquals("Super Admin", role2.roleName)
+                        assertEquals(2, role2.userId)
                     }
                 }
 
