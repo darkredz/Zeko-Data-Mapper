@@ -187,14 +187,6 @@ class DataMapperPOJOSpec : Spek({
         val mapper = DataMapper()
         val result = mapper.mapStruct(table, all) as List<User>
 
-        println(result[2].toString())
-        println(result[2].customerData.toString())
-        println(result[2].customerData?.refund.toString())
-        println(result[2].customerData?.refund!!.javaClass.canonicalName)
-        println(result[2].customerData?.refund!!.first()?.itemName)
-        println(result[1].customerData?.toString())
-        println(result[1].customerData?.refund?.toString())
-
         println(Json.encodePrettily(result))
 
         context("mapping of result") {
