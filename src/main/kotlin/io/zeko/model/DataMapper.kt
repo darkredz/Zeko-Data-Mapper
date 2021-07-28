@@ -371,25 +371,49 @@ open class DataMapper {
         return result
     }
 
-    open fun checkAndFlatMapStruct(toAdd: LinkedHashMap<String, *>, allTableInfo: LinkedHashMap<String, TableInfo>): Any {
-        val toAdd2: LinkedHashMap<String, Any?> = toAdd.clone() as LinkedHashMap<String, Any?>
-        for ((key, itemNest) in toAdd) {
-            if (itemNest is LinkedHashMap<*,*>) {
-                if (itemNest.keys.isEmpty()) {
-                    toAdd2[key] = null
-                }
-                else if (itemNest.keys.first().toString().matches(Regex("^\\d+$"))) {
-                    toAdd2[key] = flatMapStruct(itemNest as LinkedHashMap<String,*>, allTableInfo)
-                } else {
-                    toAdd2[key] = checkAndFlatMapStruct(itemNest as LinkedHashMap<String,*>, allTableInfo)
-                }
-            } else {
-                if (key == "_tbl") {
-                    val handler = allTableInfo[toAdd.get("_tbl")]!!.dataClassHandler
-                    if (handler != null) {
-                        return handler(toAdd)
+    open fun checkAndFlatMapStruct(toAdd: Any, allTableInfo: LinkedHashMap<String, TableInfo>): Any {
+        val toAdd2 =
+            if (toAdd is LinkedHashMap<*, *>)
+                toAdd.clone() as LinkedHashMap<String, Any?>
+            else if (toAdd is List<*>)
+                toAdd
+            else
+                toAdd
+
+        if (toAdd is LinkedHashMap<*, *>) {
+            for ((k, itemNest) in toAdd) {
+                val key = k.toString()
+                if (itemNest is LinkedHashMap<*, *>) {
+                    toAdd2 as LinkedHashMap<String, Any?>
+                    if (itemNest.keys.isEmpty()) {
+                        toAdd2[key] = null
+                    } else if (itemNest.keys.first().toString().matches(Regex("^\\d+$"))) {
+                        toAdd2[key] = flatMapStruct(itemNest as LinkedHashMap<String,*>, allTableInfo)
+                        (toAdd as LinkedHashMap<String, Any>).put(key, toAdd2[key] as List<Any?>)
+                    } else {
+                        val iterator = (itemNest as LinkedHashMap<String, Any?>).keys.iterator()
+                        while (iterator.hasNext()) {
+                            val key = iterator.next()
+                            val propValue = itemNest[key]
+                            if (propValue is LinkedHashMap<*, *> && propValue.isEmpty()) {
+                                iterator.remove()
+                            }
+                        }
+
+                        val dt = checkAndFlatMapStruct(itemNest, allTableInfo)
+                        toAdd as LinkedHashMap<String, Any?>
+                        toAdd2[key] = dt
+                        toAdd[key] = dt
                     }
-                    return toAdd
+                } else {
+                    if (key == "_tbl") {
+                        val handler = allTableInfo[toAdd.get("_tbl")]!!.dataClassHandler
+                        if (handler != null) {
+                            val data = handler(toAdd as LinkedHashMap<String, Any?>)
+                            return data
+                        }
+                        return toAdd
+                    }
                 }
             }
         }
