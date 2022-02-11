@@ -24,7 +24,7 @@
         <spek.version>1.1.5</spek.version>
         <jupiter.version>5.2.0</jupiter.version>
 
-        <vertx.version>3.6.2</vertx.version>
+        <vertx.version>3.9.4</vertx.version>
         <vertx.verticle>com.zeko.example.MainVerticle</vertx.verticle>
     </properties>
 
