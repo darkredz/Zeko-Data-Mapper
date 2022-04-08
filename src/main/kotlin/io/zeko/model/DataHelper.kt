@@ -24,6 +24,9 @@ import io.vertx.core.json.JsonArray
 import io.vertx.core.json.JsonObject
 import java.util.LinkedHashMap
 
+/**
+ * Helper class to convert hash map into vertx JsonArray
+ */
 class DataHelper {
     companion object {
         fun toJsonArray(rs: List<LinkedHashMap<String, Any>>): JsonArray {

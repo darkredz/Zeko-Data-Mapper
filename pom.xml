@@ -332,7 +332,16 @@
                 <version>1.6.10</version>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <id>generate-doc</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>dokka</goal>
+                            <goal>javadoc</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>before-package</id>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>javadocJar</goal>
                         </goals>
@@ -340,7 +349,7 @@
                 </executions>
                 <configuration>
                     <sourceDirectories>
-                        <dir>src/main/kotlin</dir>
+                        <dir>${project.basedir}/src/main/kotlin</dir>
                     </sourceDirectories>
                 </configuration>
             </plugin>
