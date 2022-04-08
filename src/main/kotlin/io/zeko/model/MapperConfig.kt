@@ -20,6 +20,14 @@
 
 package io.zeko.model
 
+/**
+ * MapperConfig is a wrapper for the table relationship info (hash map) to be pass into a DataMapper instance for mapping objects
+ *
+ * @property defaultPrimaryKey Default primary such as ID field
+ * @property autoRemoveLinkKey Indicate to automatically remove key that links two object/table together
+ * @property latestTable latest table that is added to the configuration via table()
+ * @property tableInfo Underlying configuration hashmap that stores the table name and its relationship/field information
+ */
 class MapperConfig(defaultPrimaryKey: String, autoRemoveLinkKey: Boolean) {
 
     var tableInfo = LinkedHashMap<String, TableInfo>()
@@ -27,11 +35,17 @@ class MapperConfig(defaultPrimaryKey: String, autoRemoveLinkKey: Boolean) {
     var defaultPrimaryKey = defaultPrimaryKey
     var autoRemoveLinkKey = autoRemoveLinkKey
 
+    /**
+     * @param defaultPrimaryKey set default primary such as common id field
+     */
     fun defaultPrimaryKeyTo(defaultPrimaryKey: String): MapperConfig {
         this.defaultPrimaryKey = defaultPrimaryKey
         return this
     }
 
+    /**
+     * @param autoRemoveLinkKey set true to remove foreign key that is linking the two tables
+     */
     fun shouldRemoveLinkKey(autoRemoveLinkKey: Boolean): MapperConfig {
         this.autoRemoveLinkKey = autoRemoveLinkKey
         return this

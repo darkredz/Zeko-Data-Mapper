@@ -25,7 +25,7 @@ ps: Zeko turns out to be rabbit in Croatian, thus the logo :D
     <dependency>
       <groupId>io.zeko</groupId>
       <artifactId>zeko-data-mapper</artifactId>
-      <version>1.6.5</version>
+      <version>1.6.7</version>
     </dependency>
     
     
