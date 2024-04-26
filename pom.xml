@@ -4,7 +4,7 @@
 
     <groupId>io.zeko</groupId>
     <artifactId>zeko-data-mapper</artifactId>
-    <version>1.6.8-SNAPSHOT</version>
+    <version>1.7.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -81,14 +81,14 @@
     </pluginRepositories>
 
     <properties>
-        <kotlin.version>1.6.20</kotlin.version>
-        <vertx.version>4.1.1</vertx.version>
+        <kotlin.version>1.7.21</kotlin.version>
+        <vertx.version>4.5.7</vertx.version>
         <spek.version>2.0.9</spek.version>
         <jupiter.version>5.2.0</jupiter.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <github.global.server>github</github.global.server>
-        <version.maven-compiler-plugin>3.6.0</version.maven-compiler-plugin>
-        <version.maven-surefire-plugin>2.19.1</version.maven-surefire-plugin>
+        <version.maven-compiler-plugin>3.8.0</version.maven-compiler-plugin>
+        <version.maven-surefire-plugin>2.22.0</version.maven-surefire-plugin>
         <version.maven-resources-plugin>3.0.1</version.maven-resources-plugin>
         <version.maven-source-plugin>3.0.1</version.maven-source-plugin>
         <version.maven-javadoc-plugin>2.10.4</version.maven-javadoc-plugin>
@@ -121,13 +121,13 @@
         <dependency>
             <groupId>io.zeko</groupId>
             <artifactId>zeko-sql-builder</artifactId>
-            <version>1.2.6</version>
+            <version>1.4.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-test</artifactId>
-            <version>1.6.20</version>
+            <version>1.7.21</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -153,9 +153,15 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-mysql-client</artifactId>
+            <version>${vertx.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.11.4</version>
+            <version>2.15.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -239,7 +245,7 @@
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
-                <version>1.6.20</version>
+                <version>1.7.22</version>
                 <executions>
                     <execution>
                         <id>compile</id>
@@ -329,7 +335,7 @@
             <plugin>
                 <groupId>org.jetbrains.dokka</groupId>
                 <artifactId>dokka-maven-plugin</artifactId>
-                <version>1.6.10</version>
+                <version>1.9.0</version>
                 <executions>
                     <execution>
                         <id>generate-doc</id>

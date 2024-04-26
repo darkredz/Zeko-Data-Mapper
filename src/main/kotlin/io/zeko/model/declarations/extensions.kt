@@ -4,6 +4,8 @@ import com.github.jasync.sql.db.ResultSet
 import io.zeko.model.ResultSetHelper
 import io.zeko.model.SelectInfo
 import io.vertx.core.json.JsonArray
+import io.vertx.sqlclient.Row
+import io.vertx.sqlclient.RowSet
 import org.joda.time.DateTimeZone
 import org.joda.time.base.BaseLocal
 import java.util.LinkedHashMap
@@ -40,3 +42,15 @@ fun List<JsonArray>.toMaps(columns: List<String>, timeProcessor: ((BaseLocal, Da
 fun List<JsonArray>.toMaps(sel: SelectInfo, timeProcessor: ((BaseLocal, DateTimeZone?, DateTimeZone?) -> Any)? = null, tzFrom: DateTimeZone? = null, tzTo: DateTimeZone? = null): List<LinkedHashMap<String, Any?>> {
     return ResultSetHelper.toMaps(this, sel.columns, timeProcessor, tzFrom, tzTo)
 }
+
+fun RowSet<Row>.toMaps(columns: List<String>, timeProcessor: ((BaseLocal, DateTimeZone?, DateTimeZone?) -> Any)? = null, tzFrom: DateTimeZone? = null, tzTo: DateTimeZone? = null): List<LinkedHashMap<String, Any?>> {
+    return ResultSetHelper.toMaps(this, columns, timeProcessor, tzFrom, tzTo)
+}
+
+fun RowSet<Row>.toMaps(sel: SelectInfo, timeProcessor: ((BaseLocal, DateTimeZone?, DateTimeZone?) -> Any)? = null, tzFrom: DateTimeZone? = null, tzTo: DateTimeZone? = null): List<LinkedHashMap<String, Any?>> {
+    return ResultSetHelper.toMaps(this, sel.columns, timeProcessor, tzFrom, tzTo)
+}
+fun <T> RowSet<Row>.toDataObject(dataClassHandler: (dataMap: Map<String, Any?>) -> T): List<T> {
+    return ResultSetHelper.rowSetToDataObject(this, dataClassHandler)
+}
+

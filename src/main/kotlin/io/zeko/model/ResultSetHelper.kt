@@ -22,6 +22,8 @@ package io.zeko.model
 
 import com.github.jasync.sql.db.ResultSet
 import io.vertx.core.json.JsonArray
+import io.vertx.sqlclient.Row
+import io.vertx.sqlclient.RowSet
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDateTime
 import org.joda.time.LocalDate
@@ -72,6 +74,20 @@ class ResultSetHelper {
             return results
         }
 
+        fun toMaps(rowSet: RowSet<Row>, columns: List<String>, timeProcessor: ((BaseLocal, DateTimeZone?, DateTimeZone?) -> Any)? = null, tzFrom: DateTimeZone? = null, tzTo: DateTimeZone? = null): List<java.util.LinkedHashMap<String, Any?>> {
+            val results = ArrayList<java.util.LinkedHashMap<String, Any?>>(rowSet.size())
+            for (row in rowSet) {
+                val size: Int = row.size()
+                val rowList = arrayListOf<Any?>()
+
+                for (pos in 0 until size) {
+                    rowList.add(row.getValue(pos))
+                }
+                results.add(convertRowToMap(rowList, columns, timeProcessor, tzFrom, tzTo))
+            }
+            return results
+        }
+
         fun convertRowToMap(row: List<Any?>, columns: List<String>, timeProcessor: ((BaseLocal, DateTimeZone?, DateTimeZone?) -> Any)? = null, tzFrom: DateTimeZone? = null, tzTo: DateTimeZone? = null): LinkedHashMap<String, Any?> {
             val obj = java.util.LinkedHashMap<String, Any?>()
 
@@ -94,6 +110,20 @@ class ResultSetHelper {
                 }
             }
             return obj
+        }
+
+        fun <T> rowSetToDataObject(result: RowSet<Row>, dataClassHandler: (dataMap: Map<String, Any?>) -> T): List<T> {
+            return result.map { jObj ->
+                val rowMap = hashMapOf<String, Any?>()
+                val size: Int = jObj.size()
+
+                for (pos in 0 until size) {
+                    val name: String = jObj.getColumnName(pos).lowercase()
+                    val value: Any = jObj.getValue(pos)
+                    rowMap[name] = value
+                }
+                dataClassHandler(rowMap)
+            }
         }
     }
 }
