@@ -119,7 +119,7 @@ class ResultSetHelper {
 
                 for (pos in 0 until size) {
                     val name: String = jObj.getColumnName(pos).lowercase()
-                    val value: Any = jObj.getValue(pos)
+                    val value: Any? = jObj.getValue(pos)
                     rowMap[name] = value
                 }
                 dataClassHandler(rowMap)
