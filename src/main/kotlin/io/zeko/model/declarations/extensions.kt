@@ -10,15 +10,6 @@ import org.joda.time.DateTimeZone
 import org.joda.time.base.BaseLocal
 import java.util.LinkedHashMap
 
-
-fun io.vertx.ext.sql.ResultSet.toMaps(columns: List<String>, timeProcessor: ((BaseLocal, DateTimeZone?, DateTimeZone?) -> Any)? = null, tzFrom: DateTimeZone? = null, tzTo: DateTimeZone? = null): List<LinkedHashMap<String, Any?>> {
-    return ResultSetHelper.toMaps(this, columns, timeProcessor, tzFrom, tzTo)
-}
-
-fun io.vertx.ext.sql.ResultSet.toMaps(sel: SelectInfo, timeProcessor: ((BaseLocal, DateTimeZone?, DateTimeZone?) -> Any)? = null, tzFrom: DateTimeZone? = null, tzTo: DateTimeZone? = null): List<LinkedHashMap<String, Any?>> {
-    return ResultSetHelper.toMaps(this, sel.columns, timeProcessor, tzFrom, tzTo)
-}
-
 fun java.sql.ResultSet.toMaps(columns: List<String>, timeProcessor: ((BaseLocal, DateTimeZone?, DateTimeZone?) -> Any)? = null, tzFrom: DateTimeZone? = null, tzTo: DateTimeZone? = null): List<LinkedHashMap<String, Any?>> {
     return ResultSetHelper.toMaps(this, columns, timeProcessor, tzFrom, tzTo)
 }

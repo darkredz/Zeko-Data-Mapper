@@ -42,15 +42,6 @@ class ResultSetHelper {
             return results
         }
 
-        fun toMaps(resultSet: io.vertx.ext.sql.ResultSet, columns: List<String>, timeProcessor: ((BaseLocal, DateTimeZone?, DateTimeZone?) -> Any)? = null, tzFrom: DateTimeZone? = null, tzTo: DateTimeZone? = null): List<LinkedHashMap<String, Any?>> {
-            val results = ArrayList<LinkedHashMap<String, Any?>>(resultSet.results.size)
-            val rows = resultSet.results
-            for (row in rows) {
-                results.add(convertRowToMap(row.toList(), columns, timeProcessor, tzFrom, tzTo))
-            }
-            return results
-        }
-
         fun toMaps(rows: ResultSet, columns: List<String>, timeProcessor: ((BaseLocal, DateTimeZone?, DateTimeZone?) -> Any)? = null, tzFrom: DateTimeZone? = null, tzTo: DateTimeZone? = null): List<LinkedHashMap<String, Any?>> {
             val results = ArrayList<LinkedHashMap<String, Any?>>(rows.size)
             for (row in rows) {
@@ -118,7 +109,7 @@ class ResultSetHelper {
                 val size: Int = jObj.size()
 
                 for (pos in 0 until size) {
-                    val name: String = jObj.getColumnName(pos).lowercase()
+                    val name: String = jObj.getColumnName(pos).toLowerCase()
                     val value: Any? = jObj.getValue(pos)
                     rowMap[name] = value
                 }
